@@ -1,98 +1,209 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+ProofStell Backend API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Decentralized Document Verification & Credential Registry on Stellar Soroban
 
-## Description
+ProofStell is a decentralized platform built on Soroban smart contracts that allows institutions, organizations, and individuals to issue, verify, and manage tamper-proof digital credentials and documents.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Instead of trusting centralized databases, ProofDesk anchors cryptographic proofs of documents on-chain, ensuring authenticity, permanence, and global verifiability.
 
-## Project setup
+From academic certificates to employment records and compliance documents, ProofDesk creates a trustless verification infrastructure powered by Stellar User interface for the ProofStell decentralized document verification platform.
 
-```bash
-$ npm install
-```
+🚀 Key Features 📄 On-Chain Document Proofs
 
-## Compile and run the project
+Institutions can register documents by storing cryptographic hashes on-chain via Soroban smart contracts.
 
-```bash
-# development
-$ npm run start
+Anyone can verify a document’s authenticity by comparing its hash with the blockchain record.
 
-# watch mode
-$ npm run start:dev
+🏫 Institutional Issuers
 
-# production mode
-$ npm run start:prod
-```
+Verified institutions (schools, companies, NGOs) can issue credentials directly to users’ wallets.
 
-## Run tests
+Examples:
 
-```bash
-# unit tests
-$ npm run test
+University certificates
 
-# e2e tests
-$ npm run test:e2e
+Employment letters
 
-# test coverage
-$ npm run test:cov
-```
+Training certifications
 
-## Deployment
+Compliance approvals
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+🔐 Wallet-Based Identity
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Users connect their Stellar wallets to:
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+Receive credentials
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Share verifiable proofs
 
-## Resources
+Manage issued documents
 
-Check out a few resources that may come in handy when working with NestJS:
+No usernames or passwords required.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+🔎 Instant Verification
 
-## Support
+Third parties can verify documents in seconds:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Upload the document
 
-## Stay in touch
+Platform hashes the file
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Hash is matched with the blockchain record
 
-## License
+Result: Valid / Not Found / Revoked
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+🧾 Revocation Registry
+
+Issuers can revoke credentials if necessary.
+
+Example cases:
+
+Fraudulent certificates
+
+Expired compliance documents
+
+Recalled licenses
+
+The revocation state is stored on-chain for full transparency.
+
+The frontend enables users, institutions, and third parties to interact with the ProofStell ecosystem.
+
+Users can:
+
+• Upload documents • Verify document authenticity • View issued credentials • Connect Stellar wallets
+
+Overview
+
+ProofStell allows anyone to verify documents in seconds.
+
+Backend services for the ProofStell decentralized document verification platform.
+
+The backend acts as the middleware between the frontend application and the Soroban smart contracts deployed on the Stellar network.
+
+It handles:
+
+• Document hashing
+• Issuer verification
+• Metadata storage
+• Smart contract interaction
+• API services for the frontend
+
+Architecture
+
+Frontend (Next.js)
+|
+v
+Backend API (NestJS)
+|
+v
+Soroban Smart Contract
+|
+v
+Stellar Network
+
+Core Responsibilities
+
+Document Processing
+Handles document uploads and generates SHA256 hashes.
+
+Blockchain Interaction
+Calls Soroban contract functions.
+
+Metadata Storage
+Stores document metadata in PostgreSQL.
+
+Verification Services
+Allows third parties to verify documents.
+
+Technology Stack
+
+Framework
+NestJS
+
+Database
+PostgreSQL
+
+ORM
+Prisma
+
+Blockchain SDK
+Stellar Soroban SDK
+
+File Handling
+Multer
+
+Hashing
+Crypto SHA256
+
+Project Structure
+src
+│
+├── auth
+│
+├── documents
+│   ├── documents.controller.ts
+│   ├── documents.service.ts
+│   └── documents.module.ts
+│
+├── issuers
+│
+├── verification
+│
+├── soroban
+│   ├── soroban.service.ts
+│   └── contract-client.ts
+│
+├── prisma
+│
+└── utils
+API Endpoints
+
+Issue Document
+
+POST /documents/issue
+
+Registers a document on-chain.
+
+Request
+
+{
+  "issuerId": "org123",
+  "walletAddress": "GXXXXXX",
+  "documentHash": "abc123..."
+}
+
+Verify Document
+
+POST /verify
+
+Uploads a document and checks if it exists on-chain.
+
+Response
+
+{
+  "status": "verified",
+  "issuer": "UniversityX",
+  "timestamp": "..."
+}
+
+Revoke Document
+
+POST /documents/revoke
+
+Revokes an existing credential.
+
+Running the Backend
+
+Install dependencies
+
+npm install
+
+Run development server
+
+npm run start:dev
+Environment Variables
+DATABASE_URL=
+SOROBAN_RPC_URL=
+STELLAR_NETWORK=
+CONTRACT_ADDRESS=
