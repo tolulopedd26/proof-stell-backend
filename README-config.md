@@ -1,55 +1,181 @@
-# Centralized Configuration Management
 
-## Overview
-This project uses a centralized configuration system based on `@nestjs/config`, `.env` files, and a strongly-typed config service. All environment variables are loaded, validated, and accessed through a single, injectable service for security, maintainability, and scalability.
 
-## How It Works
-- **Config files** are located in `src/common/config/`:
-  - `configuration.ts`: Loads and maps all environment variables.
-  - `validation.ts`: Joi schema for validating required variables.
-  - `typed-config.service.ts`: Injectable, strongly-typed config service.
-- **.env files**: Use `.env.development`, `.env.production`, and `.env` for environment-specific and default values.
-- **AppModule**: Loads config globally, validates with Joi, and exposes the typed config service.
+# ⚙️ Centralized Configuration Management
 
-## Adding New Config Values
-1. Add the variable to `.env` files.
-2. Add it to `configuration.ts` and `validation.ts`.
-3. Add a getter in `typed-config.service.ts` and update the `AppConfig` interface.
-4. Inject and use `TypedConfigService` in your modules/services.
+## 📌 Overview
 
-## How .env Files Are Selected
-- The app uses `.env.production` if `NODE_ENV=production`, otherwise `.env.development`.
-- `.env` is always loaded as a fallback.
+This project implements a **centralized, type-safe configuration system** built on top of `@nestjs/config`. It ensures all environment variables are:
 
-## Environment Variables Reference
-| Variable                          | Description                                 |
-|------------------------------------|---------------------------------------------|
-| NODE_ENV                          | Application environment (dev/prod/test)     |
-| PORT                              | HTTP server port                            |
-| DATABASE_URL                      | Database connection string                  |
-| JWT_SECRET                        | JWT signing secret                          |
-| BCRYPT_SALT_ROUNDS                | Bcrypt salt rounds for password hashing     |
-| LEADERBOARD_RECALCULATION_STRATEGY| Leaderboard recalculation mode              |
-| REDIS_HOST                        | Redis host for cache                        |
-| REDIS_PORT                        | Redis port for cache                        |
-| STARKNET_PRIVATE_KEY              | StarkNet private key                        |
-| STARKNET_ACCOUNT_ADDRESS          | StarkNet account address                    |
-| MINT_CONTRACT_ADDRESS             | Mint contract address                       |
+* ✅ Loaded consistently across environments
+* ✅ Validated at startup (fail-fast safety)
+* ✅ Strongly typed for developer confidence
+* ✅ Accessed through a single injectable service
 
-## Security
-- `.env*` files should be excluded from version control via `.gitignore`.
-- Never hardcode secrets in code.
+This approach eliminates scattered `process.env` usage and improves **security, maintainability, and scalability**.
 
-## Example Usage
-```typescript
+---
+
+## 🧠 Architecture
+
+The configuration system is organized under:
+
+```
+src/common/config/
+```
+
+### 📁 Core Components
+
+* **`configuration.ts`**
+
+  * Maps environment variables into structured config objects
+  * Normalizes raw `.env` values
+
+* **`validation.ts`**
+
+  * Uses **Joi schema validation**
+  * Ensures required environment variables exist and are valid
+
+* **`typed-config.service.ts`**
+
+  * Strongly typed, injectable config service
+  * Single source of truth for accessing config values
+
+---
+
+## 🌍 Environment Strategy
+
+The application supports **multi-environment configuration**:
+
+| File               | Purpose                       |
+| ------------------ | ----------------------------- |
+| `.env`             | Shared fallback values        |
+| `.env.development` | Local development settings    |
+| `.env.production`  | Production-safe configuration |
+
+### 🔄 Loading Priority
+
+1. `.env.<NODE_ENV>` (highest priority)
+2. `.env`
+3. System environment variables
+
+> If `NODE_ENV=production`, `.env.production` is used automatically.
+
+---
+
+## 🚀 How It Works
+
+1. NestJS loads environment variables via `ConfigModule`
+2. Variables are validated using **Joi schema**
+3. Raw values are mapped inside `configuration.ts`
+4. `TypedConfigService` exposes safe, typed accessors
+5. Services inject config instead of using `process.env`
+
+---
+
+## 🧩 Adding a New Configuration Value
+
+To safely add a new environment variable:
+
+### 1. Define it in `.env` files
+
+```env
+NEW_FEATURE_FLAG=true
+```
+
+### 2. Add validation (`validation.ts`)
+
+```ts
+NEW_FEATURE_FLAG: Joi.boolean().required(),
+```
+
+### 3. Map it in `configuration.ts`
+
+```ts
+newFeatureFlag: process.env.NEW_FEATURE_FLAG === 'true',
+```
+
+### 4. Add to config interface
+
+```ts
+export interface AppConfig {
+  newFeatureFlag: boolean;
+}
+```
+
+### 5. Expose via service
+
+```ts
+get newFeatureFlag(): boolean {
+  return this.config.newFeatureFlag;
+}
+```
+
+### 6. Use anywhere in the app
+
+```ts
+this.configService.newFeatureFlag;
+```
+
+---
+
+## 📊 Environment Variables Reference
+
+| Variable                             | Description                                                   |
+| ------------------------------------ | ------------------------------------------------------------- |
+| `NODE_ENV`                           | Application environment (`development`, `production`, `test`) |
+| `PORT`                               | HTTP server port                                              |
+| `DATABASE_URL`                       | Primary database connection string                            |
+| `JWT_SECRET`                         | Secret used for JWT signing & verification                    |
+| `BCRYPT_SALT_ROUNDS`                 | Password hashing strength configuration                       |
+| `LEADERBOARD_RECALCULATION_STRATEGY` | Strategy for recomputing leaderboard scores                   |
+| `REDIS_HOST`                         | Redis cache host                                              |
+| `REDIS_PORT`                         | Redis cache port                                              |
+| `STARKNET_PRIVATE_KEY`               | StarkNet signer private key                                   |
+| `STARKNET_ACCOUNT_ADDRESS`           | StarkNet account address                                      |
+| `MINT_CONTRACT_ADDRESS`              | Smart contract address for minting                            |
+
+---
+
+## 🔐 Security Best Practices
+
+* ❌ Never commit `.env` files to version control
+* ❌ Never hardcode secrets inside codebase
+* ✅ Always use `TypedConfigService` for access
+* ✅ Validate all environment variables at startup
+* ✅ Rotate secrets regularly in production
+
+---
+
+## 💡 Example Usage
+
+### Injectable Config Access
+
+```ts
+import { Injectable } from '@nestjs/common';
 import { TypedConfigService } from 'src/common/config/typed-config.service';
 
 @Injectable()
 export class MyService {
   constructor(private readonly config: TypedConfigService) {}
 
-  getSecret() {
+  getJwtSecret(): string {
     return this.config.jwtSecret;
   }
 }
 ```
+
+---
+
+## 🧱 Why This Approach Matters
+
+This system provides:
+
+* 🔒 **Security** → No unsafe runtime env access
+* 🧠 **Type Safety** → Compile-time guarantees
+* ⚡ **Developer Experience** → Clean dependency injection
+* 🧪 **Testability** → Easy mocking of config service
+* 📦 **Scalability** → Works across monorepos & microservices
+
+---
+
+

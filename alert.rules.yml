@@ -1,6 +1,12 @@
 groups:
   - name: backend-alerts
     rules:
+      # ------------------------------------------------------------
+      # ALERT: High CPU Usage
+      # Triggers when CPU usage stays above 85% for 2 minutes.
+      # Useful for detecting overloaded services, infinite loops,
+      # or insufficient scaling capacity.
+      # ------------------------------------------------------------
       - alert: HighCPUUsage
         expr: process_cpu_seconds_total > 0.85
         for: 2m
@@ -8,10 +14,17 @@ groups:
           severity: critical
         annotations:
           summary: "CPU usage > 85% for 2 minutes"
+
+      # ------------------------------------------------------------
+      # ALERT: High Error Rate (5xx responses)
+      # Triggers when backend starts returning elevated server errors.
+      # Indicates potential service failure, dependency outage,
+      # or misconfigured deployment.
+      # ------------------------------------------------------------
       - alert: HighErrorRate
         expr: sum(rate(http_server_requests_seconds_count{status=~"5.."}[5m])) > 5
         for: 2m
         labels:
           severity: critical
         annotations:
-          summary: "5xx error rate spike" 
+          summary: "5xx error rate spike"

@@ -10,22 +10,35 @@ describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
+    // ------------------------------------------------------------
+    // Create a fresh NestJS testing module before each test run
+    // This ensures test isolation and avoids shared state between tests
+    // ------------------------------------------------------------
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
+    // ------------------------------------------------------------
+    // Initialize a full NestJS application instance for E2E testing
+    // This boots the app exactly like production (controllers, pipes, etc.)
+    // ------------------------------------------------------------
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
   it('/ (GET)', () => {
+    // ------------------------------------------------------------
+    // Sends an HTTP request to the running test server
+    // and verifies the root endpoint behaves as expected
+    // ------------------------------------------------------------
     return request(app.getHttpServer())
       .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .expect(200) // Ensure HTTP OK response
+      .expect('Hello World!'); // Validate response body
   });
 });
- feat-email-integration
+
+// feat-email-integration
 describe('Auth Email Verification (e2e)', () => {
   let app: INestApplication;
   let server: any;
