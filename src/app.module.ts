@@ -11,7 +11,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
 import configuration from './common/config/configuration';
 import { validationSchema } from './common/config/validation';
 import { TypedConfigService } from './common/config/typed-config.service';
-import { ScheduleModule } from '@nestjs/schedule';
+import { ScheduleModule } from "@nestjs/schedule";
 import { LeaderboardModule } from './leaderboard/leaderboard.module';
 import { GameSessionModule } from './game-session/game-session.module';
 import { ChallengeModule } from './challenge/challenge.module';
@@ -30,6 +30,7 @@ import { ClsModule, ClsService } from 'nestjs-cls';
 import { LoggingModule } from './logging/logging.module';
 import { CacheModule } from './cache/cache.module';
 import { ProtectedModule } from './protected/protected.module';
+import { HealthModule } from './health/health.module';
 import { TranslationModule } from './translation';
 
 @Module({
@@ -60,10 +61,7 @@ import { TranslationModule } from './translation';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env.NODE_ENV === 'production'
-          ? ['.env.production', '.env']
-          : ['.env.development', '.env'],
+      envFilePath: process.env.NODE_ENV === 'production' ? ['.env.production', '.env'] : ['.env.development', '.env'],
       load: [configuration],
       validationSchema,
     }),
@@ -95,6 +93,7 @@ import { TranslationModule } from './translation';
     AdminModule,
     LoggingModule,
     CacheModule,
+    HealthModule,
     TranslationModule.forRoot(),
   ],
   controllers: [AppController],
