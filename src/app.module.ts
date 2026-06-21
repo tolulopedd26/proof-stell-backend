@@ -75,7 +75,7 @@ import { TranslationModule } from './translation';
         url: configService.get<string>('app.databaseUrl'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         autoLoadEntities: true,
-        synchronize: configService.get<string>('app.nodeEnv') !== 'production',
+        synchronize: configService.get<boolean>('app.dbSync') === true,
       }),
     }),
     ScheduleModule.forRoot(),
