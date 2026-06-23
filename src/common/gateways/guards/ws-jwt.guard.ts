@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { Socket } from 'socket.io';
 import { AuthTokenService } from 'src/auth/providers/auth-token.service';
+import type { AuthenticatedUser } from 'src/auth/interfaces/request-with-user';
+import { Role } from '../../enums/role.enum';
 
 @Injectable()
 export class WsJwtGuard implements CanActivate {
@@ -17,7 +19,12 @@ export class WsJwtGuard implements CanActivate {
     if (!token) throw new UnauthorizedException('No token provided');
     try {
       const payload = await this.authTokenService.verifyAccessToken(token);
-      (client as any).user = payload;
+      const user: AuthenticatedUser = {
+        id: payload.sub,
+        email: payload.email,
+        role: payload.role as Role,
+      };
+      (client as any).user = user;
       return true;
     } catch {
       throw new UnauthorizedException('Invalid token');
